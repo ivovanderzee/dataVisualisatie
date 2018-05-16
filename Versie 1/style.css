@@ -1,0 +1,34 @@
+body {
+    margin: 0;
+    background-color: #161921;
+    font-family: Futura;
+}
+
+
+#grafiek {
+
+    width: 80%;
+    height: 90%;
+    color: white;
+
+    float: left;
+    position: absolute;
+
+}
+
+#button {
+
+
+    float: right;
+    margin-top: 100px;
+    margin-right: 100px;
+
+    width: 11vw;
+    height: 7vh;
+    border-radius: 10px;
+    border-style: none;
+    font-family: futura;
+    font-weight: bold;
+    color: white;
+    background-color: darkgreen;
+}
