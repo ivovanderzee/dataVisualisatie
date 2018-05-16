@@ -1,0 +1,161 @@
+<html>
+
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChartDash);
+
+
+        var button_switch = "on";
+        var neo = "";
+
+        function changeState() {
+            if (button_switch === "on") {
+                document.getElementById("buttonNeo").style.border = "inset rgb(255, 255, 255)";
+                button_switch = "off";
+                neo = "a";
+                drawChartDash();
+
+            } else {
+                document.getElementById("buttonNeo").style.border = "none";
+                button_switch = "on";
+                neo = "b";
+                drawChartDash();
+
+
+            }
+        }
+
+
+
+        function drawChartDash() {
+
+
+            $.ajax({
+                dataType: "json",
+                url: "crypto.json",
+                success: success,
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+
+            function success(data) {
+
+
+                if (neo == "a") {
+
+
+                    var tableData = [
+                        ['Datum', 'XMR', 'NEO', 'LTC']
+                    ];
+
+                    data.crypto.forEach(function(row) {
+                        tableData.push([row.Datum, row.XMR, row.NEO, row.LTC]);
+
+
+                    });
+
+                }
+
+                if (neo == "b") {
+
+
+                    var tableData = [
+                        ['Datum', 'XMR', 'LTC']
+                    ];
+
+                    data.crypto.forEach(function(row) {
+                        tableData.push([row.Datum, row.XMR, row.LTC]);
+
+
+                    });
+
+                }
+
+
+                console.log(tableData);
+
+                var data = google.visualization.arrayToDataTable(tableData);
+                var options = {
+
+                    title: 'Crypto koers 2017',
+                    curveType: 'function',
+                    backgroundColor: '#161921',
+                    legend: {
+                        position: 'bottom'
+                    },
+
+                    titleTextStyle: {
+                        color: 'FFFFFF'
+                    },
+                    legend: {
+                        position: 'bottom'
+                    },
+
+                    legend: {
+                        textStyle: {
+                            color: 'white'
+                        }
+                    },
+
+                    axes: {
+                        x: {
+                            0: {
+                                side: 'top'
+                            }
+                        }
+                    },
+                    lineWidth: 7,
+                    animation: {
+                        duration: 400,
+                        easing: 'ease',
+                        startup: true
+                    },
+                    hAxis: {
+                        textStyle: {
+                            color: '#FFF'
+                        }
+                    },
+                    vAxis: {
+
+                        scaleType: 'linear',
+                        textStyle: {
+                            color: '#FFF'
+                        }
+                    },
+                    series: {
+                        0: {
+                            color: '#384783'
+                        }
+                    }
+                };
+                var chartDash = new google.visualization.LineChart(document.getElementById('grafiek'));
+                chartDash.draw(data, options);
+            };
+
+
+
+        }
+
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+    <div id="grafiek"></div>
+
+    <button id="buttonNeo" onclick="changeState();" value="button">NEO</button>
+
+
+
+</body>
+
+</html>
